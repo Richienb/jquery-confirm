@@ -42,6 +42,15 @@
 }(function($){
     "use strict";
 
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     // locally assign window
     var w = window;
     // w.jconfirm
@@ -817,11 +826,11 @@
 
             if(typeof iconClass !== 'undefined')
                 if(typeof iconClass === 'string')
-                    this.icon = iconClass;
+                    this.icon = escapeHtml(iconClass);
                 else if(typeof iconClass === 'function'){
                     var response = iconClass();
                     if(typeof response === 'string')
-                        this.icon = response;
+                        this.icon = escapeHtml(response);
                     else
                         this.icon = false;
                 }
